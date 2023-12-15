@@ -1,13 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-
-type Message = {
-  id: string;
-  content?: string;
-};
+import { Message } from "./components/Message";
+import { MessageType } from "./types/Message";
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentMessage, setCurrentMessage] = useState<string>("");
 
   const onTyping = useCallback(
@@ -41,20 +38,11 @@ function App() {
     <main className="w-screen h-screen flex items-end">
       <div className="pl-4 pb-16 flex flex-col gap-2">
         {messages.map((message) => (
-          <div
-            key={message.id}
-            className="w-full max-w-fit bg-white rounded-full pl-3 pr-4 py-2 relative"
-          >
-            <div className="w-6 h-6 bg-white absolute left-0 bottom-0 -z-10 rounded-sm" />
-            <span className="font-medium text-base">{message.content}</span>
-          </div>
+          <Message key={message.id} data={message} />
         ))}
 
         {currentMessage.trim() !== "" && (
-          <div className="w-full max-w-fit bg-white rounded-full pl-3 pr-4 py-2 relative">
-            <div className="w-6 h-6 bg-white absolute left-0 bottom-0 -z-10 rounded-sm" />
-            <span className="font-medium text-base">{currentMessage}</span>
-          </div>
+          <Message data={{ content: currentMessage }} />
         )}
       </div>
     </main>
