@@ -1,4 +1,4 @@
-const specialKeys = [
+const SPECIAL_KEYS = [
   'Enter',
   'Backspace',
   'Meta',
@@ -46,4 +46,4 @@ const specialKeys = [
   'F12'
 ]
 
-export { specialKeys }
+export { SPECIAL_KEYS }
