@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { MessageType } from '../types/Message'
+import { MessageType } from '../../../types/Message'
 
 type MessageProps = {
   data: Omit<MessageType, 'id'>
