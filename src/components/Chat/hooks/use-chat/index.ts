@@ -29,9 +29,27 @@ const useChat = () => {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [])
 
+  useEffect(() => {
+    const removeMessage = () => {
+      if (messages.length >= 3) {
+        dispatch({ type: ChatActionTypes.REMOVE_MESSAGE })
+      }
+    }
+
+    const timer = setInterval(
+      removeMessage,
+      messages.length >= 3
+        ? 500 // 500 ms | half sec
+        : 3000 // ms | 3 sec
+    )
+
+    return () => clearInterval(timer)
+  }, [dispatch, messages])
+
   return {
     messages,
-    currentMessage
+    currentMessage,
+    dispatch
   }
 }
 

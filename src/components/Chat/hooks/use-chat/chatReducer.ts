@@ -11,7 +11,8 @@ import { MessageType } from '../../../../types/Message'
 export enum ChatActionTypes {
   BACKSPACE = BACKSPACE_KEY_CODE,
   ENTER = ENTER_KEY_CODE,
-  DEFAULT = DEFAULT_KEY_CODE
+  DEFAULT = DEFAULT_KEY_CODE,
+  REMOVE_MESSAGE = 'remove_message'
 }
 
 type ChatState = {
@@ -26,8 +27,15 @@ type DefaultAction = {
   key: string
   code: string
 }
+type RemoveMessageAction = {
+  type: ChatActionTypes.REMOVE_MESSAGE
+}
 
-type ChatAction = BackspaceAction | EnterAction | DefaultAction
+type ChatAction =
+  | BackspaceAction
+  | EnterAction
+  | DefaultAction
+  | RemoveMessageAction
 
 const chatReducer = (state: ChatState, action: ChatAction) => {
   switch (action.type) {
@@ -45,6 +53,12 @@ const chatReducer = (state: ChatState, action: ChatAction) => {
           ],
           currentMessage: ''
         }
+      }
+      return state
+
+    case ChatActionTypes.REMOVE_MESSAGE:
+      if (state.messages.length > 0) {
+        return { ...state, messages: [...state.messages.slice(1)] }
       }
       return state
 
