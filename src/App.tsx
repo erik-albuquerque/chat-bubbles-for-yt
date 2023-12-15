@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+
 import { Message } from "./components/Message";
+import { FactoryMessages } from "./components/FactoryMessages";
 import { MessageType } from "./types/Message";
 
 function App() {
@@ -37,9 +39,7 @@ function App() {
   return (
     <main className="w-screen h-screen flex items-end">
       <div className="pl-4 pb-16 flex flex-col gap-2">
-        {messages.map((message) => (
-          <Message key={message.id} data={message} />
-        ))}
+        <FactoryMessages messages={messages} />
 
         {currentMessage.trim() !== "" && (
           <Message data={{ content: currentMessage }} />
