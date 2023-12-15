@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid'
 
 import { FactoryMessages } from './components/FactoryMessages'
 import { Message } from './components/Message'
+import { ENTER_KEY_CODE, BACKSPACE_KEY_CODE, specialKeys } from './constants'
 import { MessageType } from './types/Message'
 
 function App() {
@@ -10,21 +11,31 @@ function App() {
   const [currentMessage, setCurrentMessage] = useState<string>('')
 
   const onTyping = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.code !== 'Enter') {
-        setCurrentMessage((prevMessage) => prevMessage + e.key)
-      } else if (currentMessage.trim() !== '') {
-        const messageId = uuid()
+    ({ code, key }: KeyboardEvent) => {
+      switch (code) {
+        case BACKSPACE_KEY_CODE:
+          setCurrentMessage((prevMessage) => prevMessage.slice(0, -1))
+          break
 
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            id: messageId,
-            content: currentMessage
+        case ENTER_KEY_CODE:
+          if (key.trim() !== '') {
+            const messageId = uuid()
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              {
+                id: messageId,
+                content: currentMessage
+              }
+            ])
+            setCurrentMessage('')
           }
-        ])
+          break
 
-        setCurrentMessage('')
+        default:
+          if (!specialKeys.includes(code) && key.length === 1) {
+            setCurrentMessage((prevMessage) => prevMessage + key)
+          }
+          break
       }
     },
     [currentMessage]
