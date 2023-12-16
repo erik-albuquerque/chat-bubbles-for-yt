@@ -31,7 +31,7 @@ const useChat = () => {
 
   useEffect(() => {
     const removeMessage = () => {
-      if (messages.length >= 3) {
+      if (messages.length > 0) {
         dispatch({ type: ChatActionTypes.REMOVE_MESSAGE })
       }
     }
@@ -40,7 +40,7 @@ const useChat = () => {
       removeMessage,
       messages.length >= 3
         ? 500 // 500 ms | half sec
-        : 3000 // ms | 3 sec
+        : 6000 // ms | 6 sec
     )
 
     return () => clearInterval(timer)
