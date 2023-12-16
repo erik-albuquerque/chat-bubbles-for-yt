@@ -4,17 +4,17 @@ import { Message } from './components/Message'
 import { useChat } from './hooks/use-chat'
 
 const Chat = () => {
-  const { messages, currentMessage } = useChat()
-  const showCurrentMessage = currentMessage.trim() !== ''
+  const { chatHistory, draftMessage } = useChat()
+  const showDraftMessage = draftMessage.trim() !== ''
 
   return (
     <div className="flex flex-col gap-2 pb-16 pl-4">
-      <FactoryMessages messages={messages} />
+      <FactoryMessages messages={chatHistory} />
 
-      {showCurrentMessage && (
+      {showDraftMessage && (
         <Message
           animate={LeftSlideAnimation}
-          data={{ content: currentMessage }}
+          data={{ content: draftMessage }}
         />
       )}
     </div>

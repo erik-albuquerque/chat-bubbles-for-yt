@@ -1,54 +1,67 @@
-import { useEffect, useReducer } from 'react'
+import { useReducer, useCallback, useMemo, useState, useEffect } from 'react'
 
 import { BACKSPACE_KEY_CODE, ENTER_KEY_CODE } from '../../../../constants'
-import { chatReducer, ChatActionTypes } from './chatReducer'
+import { chatReducer } from '../reducers/chat-reducer'
+import { ChatActionEnum } from '../reducers/chat-reducer/types'
+
+type ActionMap = {
+  [key: string]: ChatActionEnum
+}
+
+const ACTION_MAP: ActionMap = {
+  [BACKSPACE_KEY_CODE]: ChatActionEnum.BACKSPACE_KEY_PRESS,
+  [ENTER_KEY_CODE]: ChatActionEnum.ENTER_KEY_PRESS
+}
+
+enum TimerValues {
+  SHORT = 500, // 500ms
+  LONG = 6000 // 6 sec
+}
 
 const useChat = () => {
-  const [{ messages, currentMessage }, dispatch] = useReducer(chatReducer, {
-    messages: [],
-    currentMessage: ''
+  const [{ chatHistory, draftMessage }, dispatch] = useReducer(chatReducer, {
+    chatHistory: [],
+    draftMessage: ''
   })
 
-  const onKeyDown = ({ code, key }: KeyboardEvent) => {
-    switch (code) {
-      case BACKSPACE_KEY_CODE:
-        dispatch({ type: ChatActionTypes.BACKSPACE })
-        break
-      case ENTER_KEY_CODE:
-        dispatch({ type: ChatActionTypes.ENTER, key })
-        break
-      default:
-        dispatch({ type: ChatActionTypes.DEFAULT, key, code })
-        break
-    }
-  }
+  const [isMessageVisible, setIsMessageVisible] = useState(true)
 
-  useEffect(() => {
-    window.addEventListener('keydown', onKeyDown)
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    const { code, key } = event
+    const action = ACTION_MAP[code]
 
-    return () => window.removeEventListener('keydown', onKeyDown)
+    if (action) dispatch({ type: action, key, code })
+    dispatch({ type: ChatActionEnum.UPDATE_DRAFT_MESSAGE, key, code })
   }, [])
 
-  useEffect(() => {
-    const removeMessage = () => {
-      if (messages.length > 0) {
-        dispatch({ type: ChatActionTypes.REMOVE_MESSAGE })
-      }
-    }
+  const getTimerDuration = useMemo(() => {
+    return chatHistory.length >= 3 ? TimerValues.SHORT : TimerValues.LONG
+  }, [chatHistory.length])
 
-    const timer = setInterval(
-      removeMessage,
-      messages.length >= 3
-        ? 500 // 500 ms | half sec
-        : 6000 // ms | 6 sec
+  useEffect(() => {
+    const timerId = setTimeout(
+      () => {
+        dispatch({
+          type: isMessageVisible
+            ? ChatActionEnum.HIDE_MESSAGE
+            : ChatActionEnum.REMOVE_MESSAGE
+        })
+        setIsMessageVisible(!isMessageVisible)
+      },
+      isMessageVisible ? TimerValues.SHORT : getTimerDuration
     )
 
-    return () => clearInterval(timer)
-  }, [dispatch, messages])
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      clearTimeout(timerId)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [getTimerDuration, handleKeyDown, isMessageVisible])
 
   return {
-    messages,
-    currentMessage,
+    chatHistory,
+    draftMessage,
     dispatch
   }
 }
