@@ -1,16 +1,16 @@
 import { motion, AnimatePresence, HTMLMotionProps } from 'framer-motion'
 import { FC } from 'react'
 
-import { MessageType } from '../../../types/Message'
+import { BubbleType } from '../../../types/bubble'
 
-type MessageProps = HTMLMotionProps<'div'> & {
-  data: Omit<MessageType, 'id'>
+type BubbleProps = HTMLMotionProps<'div'> & {
+  data: Omit<BubbleType, 'id'>
 }
 
-const Message: FC<MessageProps> = ({
+const Bubble: FC<BubbleProps> = ({
   data: { content = '', isVisible = true },
   ...props
-}: MessageProps) => {
+}: BubbleProps) => {
   return (
     <AnimatePresence>
       {isVisible && (
@@ -26,4 +26,4 @@ const Message: FC<MessageProps> = ({
   )
 }
 
-export { Message }
+export { Bubble }

@@ -1,46 +1,46 @@
 import { v4 as uuid } from 'uuid'
 
 import { SPECIAL_KEYS } from '../../../../../constants'
-import { MessageType } from '../../../../../types/Message'
+import { BubbleType } from '../../../../../types/bubble'
 import { ChatActionEnum, ChatActionTypes } from './types'
 
 type ChatState = {
-  chatHistory: MessageType[]
-  draftMessage: string
+  chatHistory: BubbleType[]
+  draftBubble: string
 }
 
-const updateDraftMessage = (
+const updateDraftBubble = (
   state: ChatState,
   key: string,
   code: string
 ): ChatState => {
   return !SPECIAL_KEYS.includes(code) && key.length === 1
-    ? { ...state, draftMessage: state.draftMessage + key }
+    ? { ...state, draftBubble: state.draftBubble + key }
     : state
 }
 
-const isMessageEmpty = (message: string): boolean => message.trim() === ''
+const isBubbleEmpty = (bubble: string): boolean => bubble.trim() === ''
 
 const chatReducer = (state: ChatState, action: ChatActionTypes): ChatState => {
-  const { chatHistory, draftMessage } = state
+  const { chatHistory, draftBubble } = state
 
   switch (action.type) {
     case ChatActionEnum.BACKSPACE_KEY_PRESS:
-      return { ...state, draftMessage: draftMessage.slice(0, -1) }
+      return { ...state, draftBubble: draftBubble.slice(0, -1) }
 
     case ChatActionEnum.ENTER_KEY_PRESS:
-      return !isMessageEmpty(draftMessage)
+      return !isBubbleEmpty(draftBubble)
         ? {
             ...state,
             chatHistory: [
               ...chatHistory,
-              { id: uuid(), content: draftMessage, isVisible: true }
+              { id: uuid(), content: draftBubble, isVisible: true }
             ],
-            draftMessage: ''
+            draftBubble: ''
           }
         : state
 
-    case ChatActionEnum.HIDE_MESSAGE:
+    case ChatActionEnum.HIDE_BUBBLE:
       return chatHistory.length > 0
         ? {
             ...state,
@@ -51,13 +51,13 @@ const chatReducer = (state: ChatState, action: ChatActionTypes): ChatState => {
           }
         : state
 
-    case ChatActionEnum.REMOVE_MESSAGE:
+    case ChatActionEnum.REMOVE_BUBBLE:
       return chatHistory.length > 0
         ? { ...state, chatHistory: [...chatHistory.slice(1)] }
         : state
 
-    case ChatActionEnum.UPDATE_DRAFT_MESSAGE:
-      return updateDraftMessage(state, action.key, action.code)
+    case ChatActionEnum.UPDATE_DRAFT_BUBBLE:
+      return updateDraftBubble(state, action.key, action.code)
 
     default:
       return state

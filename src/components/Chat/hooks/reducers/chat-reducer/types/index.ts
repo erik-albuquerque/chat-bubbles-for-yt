@@ -3,9 +3,9 @@ import { BACKSPACE_KEY_CODE, ENTER_KEY_CODE } from '../../../../../../constants'
 export enum ChatActionEnum {
   BACKSPACE_KEY_PRESS = BACKSPACE_KEY_CODE,
   ENTER_KEY_PRESS = ENTER_KEY_CODE,
-  REMOVE_MESSAGE = 'remove_message',
-  HIDE_MESSAGE = 'hide_message',
-  UPDATE_DRAFT_MESSAGE = 'update_draft_message'
+  REMOVE_BUBBLE = 'remove_bubble',
+  HIDE_BUBBLE = 'hide_bubble',
+  UPDATE_DRAFT_BUBBLE = 'update_draft_bubble'
 }
 
 type BackspaceKeyPressAction = {
@@ -17,25 +17,25 @@ type EnterKeyPressAction = {
   key: string
 }
 
-type UpdateDraftMessageAction = {
-  type: ChatActionEnum.UPDATE_DRAFT_MESSAGE
+type UpdateDraftBubbleAction = {
+  type: ChatActionEnum.UPDATE_DRAFT_BUBBLE
   key: string
   code: string
 }
 
-type RemoveMessageAction = {
-  type: ChatActionEnum.REMOVE_MESSAGE
+type RemoveBubbleAction = {
+  type: ChatActionEnum.REMOVE_BUBBLE
 }
 
-type HideMessageAction = {
-  type: ChatActionEnum.HIDE_MESSAGE
+type HideBubbleAction = {
+  type: ChatActionEnum.HIDE_BUBBLE
 }
 
 type ChatActionTypes =
   | BackspaceKeyPressAction
   | EnterKeyPressAction
-  | UpdateDraftMessageAction
-  | RemoveMessageAction
-  | HideMessageAction
+  | UpdateDraftBubbleAction
+  | RemoveBubbleAction
+  | HideBubbleAction
 
 export type { ChatActionTypes }

@@ -1,21 +1,18 @@
-import { LeftSlideAnimation } from '../../animations/message'
-import { FactoryMessages } from './components/FactoryMessages'
-import { Message } from './components/Message'
+import { LeftSlideAnimation } from '../../animations/bubble'
+import { Bubble } from './components/Bubble'
+import { FactoryBubbles } from './components/FactoryBubbles'
 import { useChat } from './hooks/use-chat'
 
 const Chat = () => {
-  const { chatHistory, draftMessage } = useChat()
-  const showDraftMessage = draftMessage.trim() !== ''
+  const { chatHistory, draftBubble } = useChat()
+  const showDraftBubble = draftBubble.trim() !== ''
 
   return (
     <div className="flex flex-col gap-2 pb-16 pl-4">
-      <FactoryMessages messages={chatHistory} />
+      <FactoryBubbles bubbles={chatHistory} />
 
-      {showDraftMessage && (
-        <Message
-          animate={LeftSlideAnimation}
-          data={{ content: draftMessage }}
-        />
+      {showDraftBubble && (
+        <Bubble animate={LeftSlideAnimation} data={{ content: draftBubble }} />
       )}
     </div>
   )

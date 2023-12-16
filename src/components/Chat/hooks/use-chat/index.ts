@@ -19,19 +19,19 @@ enum TimerValues {
 }
 
 const useChat = () => {
-  const [{ chatHistory, draftMessage }, dispatch] = useReducer(chatReducer, {
+  const [{ chatHistory, draftBubble }, dispatch] = useReducer(chatReducer, {
     chatHistory: [],
-    draftMessage: ''
+    draftBubble: ''
   })
 
-  const [isMessageVisible, setIsMessageVisible] = useState(true)
+  const [isBubbleVisible, setIsBubbleVisible] = useState(true)
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     const { code, key } = event
     const action = ACTION_MAP[code]
 
     if (action) dispatch({ type: action, key, code })
-    dispatch({ type: ChatActionEnum.UPDATE_DRAFT_MESSAGE, key, code })
+    dispatch({ type: ChatActionEnum.UPDATE_DRAFT_BUBBLE, key, code })
   }, [])
 
   const getTimerDuration = useMemo(() => {
@@ -42,13 +42,13 @@ const useChat = () => {
     const timerId = setTimeout(
       () => {
         dispatch({
-          type: isMessageVisible
-            ? ChatActionEnum.HIDE_MESSAGE
-            : ChatActionEnum.REMOVE_MESSAGE
+          type: isBubbleVisible
+            ? ChatActionEnum.HIDE_BUBBLE
+            : ChatActionEnum.REMOVE_BUBBLE
         })
-        setIsMessageVisible(!isMessageVisible)
+        setIsBubbleVisible(!isBubbleVisible)
       },
-      isMessageVisible ? TimerValues.SHORT : getTimerDuration
+      isBubbleVisible ? TimerValues.SHORT : getTimerDuration
     )
 
     window.addEventListener('keydown', handleKeyDown)
@@ -57,11 +57,11 @@ const useChat = () => {
       clearTimeout(timerId)
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [getTimerDuration, handleKeyDown, isMessageVisible])
+  }, [getTimerDuration, handleKeyDown, isBubbleVisible])
 
   return {
     chatHistory,
-    draftMessage,
+    draftBubble,
     dispatch
   }
 }
