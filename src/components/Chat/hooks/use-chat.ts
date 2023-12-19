@@ -1,8 +1,8 @@
 import { useReducer, useCallback, useMemo, useState, useEffect } from 'react'
 
-import { BACKSPACE_KEY_CODE, ENTER_KEY_CODE } from '../../../../constants'
-import { chatReducer } from '../reducers/chat-reducer'
-import { ChatActionEnum } from '../reducers/chat-reducer/types'
+import { BACKSPACE_KEY_CODE, ENTER_KEY_CODE } from '../../../constants'
+import { chatReducer } from '../../../reducers/chat-reducer'
+import { ChatActionEnum } from '../../../reducers/chat-reducer/types'
 
 type ActionMap = {
   [key: string]: ChatActionEnum

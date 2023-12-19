@@ -1,4 +1,5 @@
-import { BACKSPACE_KEY_CODE, ENTER_KEY_CODE } from '../../../../../../constants'
+import { BACKSPACE_KEY_CODE, ENTER_KEY_CODE } from '../../../constants'
+import { BubbleType } from '../../../types/bubble'
 
 export enum ChatActionEnum {
   BACKSPACE_KEY_PRESS = BACKSPACE_KEY_CODE,
@@ -38,4 +39,9 @@ type ChatActionTypes =
   | RemoveBubbleAction
   | HideBubbleAction
 
-export type { ChatActionTypes }
+type ChatState = {
+  chatHistory: BubbleType[]
+  draftBubble: string
+}
+
+export type { ChatActionTypes, ChatState }

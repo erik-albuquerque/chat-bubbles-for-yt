@@ -1,25 +1,7 @@
 import { v4 as uuid } from 'uuid'
 
-import { SPECIAL_KEYS } from '../../../../../constants'
-import { BubbleType } from '../../../../../types/bubble'
-import { ChatActionEnum, ChatActionTypes } from './types'
-
-type ChatState = {
-  chatHistory: BubbleType[]
-  draftBubble: string
-}
-
-const updateDraftBubble = (
-  state: ChatState,
-  key: string,
-  code: string
-): ChatState => {
-  return !SPECIAL_KEYS.includes(code) && key.length === 1
-    ? { ...state, draftBubble: state.draftBubble + key }
-    : state
-}
-
-const isBubbleEmpty = (bubble: string): boolean => bubble.trim() === ''
+import { ChatActionEnum, ChatActionTypes, ChatState } from './types'
+import { updateDraftBubble, isBubbleEmpty } from './utils'
 
 const chatReducer = (state: ChatState, action: ChatActionTypes): ChatState => {
   const { chatHistory, draftBubble } = state
