@@ -1,7 +1,7 @@
 import { slideRightAnimation } from '../../animations/bubble'
+import { useChat } from '../../hooks/use-chat'
 import { Bubble } from './components/Bubble'
 import { FactoryBubbles } from './components/FactoryBubbles'
-import { useChat } from './hooks/use-chat'
 
 const Chat = () => {
   const { chatHistory, draftBubble } = useChat()
