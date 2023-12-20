@@ -1,4 +1,4 @@
-import { LeftSlideAnimation } from '../../animations/bubble'
+import { slideRightAnimation } from '../../animations/bubble'
 import { Bubble } from './components/Bubble'
 import { FactoryBubbles } from './components/FactoryBubbles'
 import { useChat } from './hooks/use-chat'
@@ -12,7 +12,7 @@ const Chat = () => {
       <FactoryBubbles bubbles={chatHistory} />
 
       {showDraftBubble && (
-        <Bubble animate={LeftSlideAnimation} data={{ content: draftBubble }} />
+        <Bubble data={{ content: draftBubble }} {...slideRightAnimation} />
       )}
     </div>
   )

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { PullUpAnimation } from '../../../animations/bubble'
+import { slideUpAnimation } from '../../../animations/bubble'
 import { BubbleType } from '../../../types/bubble'
 import { Bubble } from './Bubble'
 
@@ -12,7 +12,7 @@ const FactoryBubbles: FC<FactoryBubblesProps> = ({ bubbles }) => {
   return (
     <>
       {bubbles.map((bubbles) => (
-        <Bubble key={bubbles.id} data={bubbles} {...PullUpAnimation} />
+        <Bubble key={bubbles.id} data={bubbles} {...slideUpAnimation} />
       ))}
     </>
   )

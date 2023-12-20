@@ -1,14 +1,14 @@
 import { AnimationProps } from 'framer-motion'
 
-type AnimateProps = AnimationProps['animate']
-
-const LeftSlideAnimation: AnimateProps = {
-  opacity: [0, 1],
-  x: [-20, 0],
-  transition: { duration: 0.3 }
+const slideRightAnimation: AnimationProps = {
+  animate: {
+    opacity: [0, 1],
+    x: [-20, 0],
+    transition: { duration: 0.3 }
+  }
 }
 
-const PullUpAnimation: AnimationProps = {
+const slideUpAnimation: AnimationProps = {
   animate: {
     y: [0, -10],
     transition: {
@@ -23,4 +23,4 @@ const PullUpAnimation: AnimationProps = {
   exit: { opacity: 0, transition: { duration: 0.5 } }
 }
 
-export { LeftSlideAnimation, PullUpAnimation }
+export { slideRightAnimation, slideUpAnimation }
