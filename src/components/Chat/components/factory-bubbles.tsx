@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { slideUpAnimation } from '../../../animations/bubble'
 import { BubbleType } from '../../../types/bubble'
-import { Bubble } from './Bubble'
+import { Bubble } from './bubble'
 
 type FactoryBubblesProps = {
 	bubbles: BubbleType[]
