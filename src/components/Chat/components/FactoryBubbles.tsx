@@ -5,17 +5,19 @@ import { BubbleType } from '../../../types/bubble'
 import { Bubble } from './Bubble'
 
 type FactoryBubblesProps = {
-  bubbles: BubbleType[]
+	bubbles: BubbleType[]
 }
 
-const FactoryBubbles: FC<FactoryBubblesProps> = ({ bubbles }) => {
-  return (
-    <>
-      {bubbles.map((bubbles) => (
-        <Bubble key={bubbles.id} data={bubbles} {...slideUpAnimation} />
-      ))}
-    </>
-  )
+const FactoryBubbles: FC<FactoryBubblesProps> = ({
+	bubbles
+}: FactoryBubblesProps) => {
+	return (
+		<>
+			{bubbles.map((bubbles) => (
+				<Bubble key={bubbles.id} data={bubbles} {...slideUpAnimation} />
+			))}
+		</>
+	)
 }
 
 export { FactoryBubbles }

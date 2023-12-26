@@ -1,21 +1,11 @@
-import { slideRightAnimation } from '../../animations/bubble'
-import { useChat } from '../../hooks/use-chat'
-import { Bubble } from './components/Bubble'
-import { FactoryBubbles } from './components/FactoryBubbles'
+import { ReactNode } from 'react'
 
-const Chat = () => {
-  const { chatHistory, draftBubble } = useChat()
-  const showDraftBubble = draftBubble.trim() !== ''
+type ChatProps = {
+	children: ReactNode
+}
 
-  return (
-    <div className="flex flex-col gap-2 pb-16 pl-4">
-      <FactoryBubbles bubbles={chatHistory} />
-
-      {showDraftBubble && (
-        <Bubble data={{ content: draftBubble }} {...slideRightAnimation} />
-      )}
-    </div>
-  )
+const Chat = ({ children }: ChatProps) => {
+	return <div className="flex flex-col gap-2 pb-16 pl-4">{children}</div>
 }
 
 export { Chat }
