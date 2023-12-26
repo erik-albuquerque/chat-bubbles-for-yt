@@ -3,7 +3,7 @@ import { DraftBubble } from './components/chat/components/draft-bubble'
 import { FactoryBubbles } from './components/chat/components/factory-bubbles'
 import { useChat } from './hooks/use-chat'
 
-function App() {
+const App = () => {
 	const { chatHistory, showDraftBubble, onDraftBubbleChange } = useChat()
 
 	return (
@@ -20,4 +20,4 @@ function App() {
 	)
 }
 
-export default App
+export { App }
