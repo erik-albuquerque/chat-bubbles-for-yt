@@ -19,7 +19,7 @@ const DraftBubble = ({
 		onValueChange(event.currentTarget.innerText)
 	}
 
-	const handleBlur = useCallback(() => {
+	const handleFocus = useCallback(() => {
 		const { current: currentRefEditable } = refEditable
 
 		if (currentRefEditable && isVisible) {
@@ -27,7 +27,7 @@ const DraftBubble = ({
 		}
 	}, [refEditable, isVisible])
 
-	useEffect(handleBlur, [handleBlur])
+	useEffect(handleFocus, [handleFocus])
 
 	return (
 		<AnimatePresence>
@@ -42,7 +42,7 @@ const DraftBubble = ({
 						className="max-w-md overflow-y-hidden break-words text-base outline-none"
 						ref={refEditable}
 						onInput={handleDraftBubbleChange}
-						onBlur={handleBlur}
+						onBlur={handleFocus}
 					/>
 				</motion.div>
 			)}

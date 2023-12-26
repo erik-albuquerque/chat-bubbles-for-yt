@@ -1,6 +1,6 @@
-import { Chat } from './components/Chat'
-import { DraftBubble } from './components/Chat/components/DraftBubble'
-import { FactoryBubbles } from './components/Chat/components/FactoryBubbles'
+import { Chat } from './components/chat'
+import { DraftBubble } from './components/chat/components/draft-bubble'
+import { FactoryBubbles } from './components/chat/components/factory-bubbles'
 import { useChat } from './hooks/use-chat'
 
 function App() {
