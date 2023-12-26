@@ -13,9 +13,10 @@ const FactoryBubbles: FC<FactoryBubblesProps> = ({
 }: FactoryBubblesProps) => {
 	return (
 		<>
-			{bubbles.map((bubbles) => (
-				<Bubble key={bubbles.id} data={bubbles} {...slideUpAnimation} />
-			))}
+			{bubbles.length > 0 &&
+				bubbles.map((bubbles) => (
+					<Bubble key={bubbles.id} data={bubbles} {...slideUpAnimation} />
+				))}
 		</>
 	)
 }
