@@ -4,8 +4,7 @@ import { FactoryBubbles } from './components/Chat/components/FactoryBubbles'
 import { useChat } from './hooks/use-chat'
 
 function App() {
-	const { chatHistory, showDraftBubble, onDraftBubbleChange, draftBubble } =
-		useChat()
+	const { chatHistory, showDraftBubble, onDraftBubbleChange } = useChat()
 
 	return (
 		<main className="flex h-screen w-screen items-end">
@@ -13,7 +12,6 @@ function App() {
 				<FactoryBubbles bubbles={chatHistory} />
 
 				<DraftBubble
-					value={draftBubble}
 					isVisible={showDraftBubble}
 					onValueChange={onDraftBubbleChange}
 				/>

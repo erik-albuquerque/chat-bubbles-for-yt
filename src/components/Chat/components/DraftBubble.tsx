@@ -1,47 +1,48 @@
 import { motion, HTMLMotionProps, AnimatePresence } from 'framer-motion'
-import { ChangeEvent, useEffect, useRef } from 'react'
+import { FormEvent, useCallback, useEffect, useRef } from 'react'
 
 import { slideRightAnimation } from '../../../animations/bubble'
 
 type DraftBubbleProps = HTMLMotionProps<'div'> & {
-	value: string
 	isVisible?: boolean
 	onValueChange: (value: string) => void
 }
 
 const DraftBubble = ({
-	value,
 	isVisible = false,
 	onValueChange,
 	...props
 }: DraftBubbleProps) => {
-	const inputRef = useRef<HTMLInputElement>(null)
+	const refEditable = useRef<HTMLDivElement>(null)
 
-	const handleDraftBubbleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		onValueChange(event.target.value)
+	const handleDraftBubbleChange = (event: FormEvent<HTMLDivElement>) => {
+		onValueChange(event.currentTarget.innerText)
 	}
 
-	useEffect(() => {
-		if (inputRef.current && isVisible) {
-			inputRef.current.focus()
+	const handleBlur = useCallback(() => {
+		const { current: currentRefEditable } = refEditable
+
+		if (currentRefEditable && isVisible) {
+			currentRefEditable.focus()
 		}
-	}, [isVisible])
+	}, [refEditable, isVisible])
+
+	useEffect(handleBlur, [handleBlur])
 
 	return (
 		<AnimatePresence>
 			{isVisible && (
 				<motion.div
-					className="max-w-md rounded-3xl bg-white py-2 pl-3 pr-4 "
+					className="w-fit rounded-3xl bg-white py-2 pl-3 pr-4 "
 					{...slideRightAnimation}
 					{...props}
 				>
-					<input
-						name="draft_bubble"
-						type="text"
-						className="w-full break-all border-none text-base outline-none"
-						value={value}
-						ref={inputRef}
-						onChange={handleDraftBubbleChange}
+					<div
+						contentEditable
+						className="max-w-md overflow-y-hidden break-words text-base outline-none"
+						ref={refEditable}
+						onInput={handleDraftBubbleChange}
+						onBlur={handleBlur}
 					/>
 				</motion.div>
 			)}
